@@ -1,0 +1,18 @@
+function pca = ourPCA(x)
+
+c=ourCov(x);
+[V,D]=eig(c);
+    [D , sortindex]= sort(diag(D),'descend');    
+
+
+
+
+[m,n]=size(x);
+    if m>n
+    [V,D] = eig(repmat(x,1,m/n));
+    else
+    [V,D] = eig(repmat(x,n/m,1));
+    end
+pca=x*V;
+end
+
