@@ -57,32 +57,22 @@ load 'shapes.mat'
 
 % shape the nPunkte x nDimensionen x nShapes to a 
 % nPunkte*nDimensionen x nShapes matrix
-% prepare the input value
 shape = reshape(aligned,[size(aligned,1)*size(aligned,2),size(aligned,3)]);
-[V,D] = ourPCA(shape');
-meanshape = mean(shape,2);
 
-
-
-
-
-
-
-
-    shape_ = reshape(meanshape,128,2);
-
+[V,D] = ourPCA(shape);
+meanshape = mean(shape);
 
 bar(D*100/sum(D))
 
-Vmain = 13
-Dmain= D(1:Vmain) 
+Vmain = 13;
+Dmain= D(1:Vmain) ;
 
 for i = 1:Vmain
 figure;
     for S = linspace( -3*sqrt(Dmain(i)), 3*sqrt(Dmain(i)),10);
     b = zeros(Vmain,1);
     b(i)= S;
-    plotShape(meanshape,V(:,1),b);
+    plotShape(meanshape,V(:,1:Vmain),b);
     title(['Mode N: ' num2str(i)]);
     hold on
      end    
