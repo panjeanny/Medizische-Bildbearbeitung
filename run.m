@@ -126,9 +126,14 @@ title('3D Plot of data3d.mat');
 D3 = data';
 [m,n,k] = size(D3);
 d3_mean = repmat(mean(D3),m,1);
-[eval3D, evec3D] = ourPCA(D3);
-%main_vectors = evec3D(:,1:2);
-%main_scores = (D3 - d3_mean)*main_vectors;
+[evec3D, eval3D] = ourPCA(D3);
+main_vectors = evec3D(:,1:2);
+main_scores = (D3 - d3_mean)*main_vectors;
+
+plot_values = main_scores*main_vectors'+d3_mean;
+
+figure;
+scatter3(plot_values(:,1),plot_values(:,2),plot_values(:,3),'.');
 %reconstruced3D = d3_mean + main_scores*main_vectors;
 
 plot3DPCA(D3, mean(D3), evec, eval, 0,1);
