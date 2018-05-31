@@ -50,10 +50,16 @@ d_mean = repmat(mean(D),m,1);
 [evec3, eval3] = ourPCA(D);
 main_vector = evec3(:,1);
 main_score = (D-d_mean)*main_vector; % Equals to normalized datapoints times the main_vector (=> projection)
+
+plot_values = main_score*main_vector'+d_mean;
+figure;
+plot(plot_values(:,1), plot_values(:,2),'.');
+title('projected values to main vector');
+
 reconstructed_data = d_mean + main_score*main_vector';
 %Calculating the coorinates along the main vector
 
-plot2DPCA(D, mean(D), reconstructed_data, evec3, eval3, 1,1)
+plot2DPCA(D, mean(D), reconstructed_data, evec3, eval3, 0,1)
 title('Exercise 3, Reconstructed data3 using main vector');
 %What is the averrage error made?
 errormatrix = D - reconstructed_data;
@@ -74,10 +80,16 @@ d_mean = repmat(mean(D),m,1);
 [evec3,eval3] = ourPCA(D);
 side_vector = evec3(:,2);
 side_score = (D-d_mean)*side_vector; % Equals to normalized datapoints times the main_vector (=> projection)
+
+plot_values = main_score*side_vector'+d_mean;
+figure;
+plot(plot_values(:,1), plot_values(:,2),'.');
+title('projected values to main vector');
+
 reconstructed_data_side = d_mean + side_score*side_vector';
 %Calculating the coorinates along the main vector
 
-plot2DPCA(D, mean(D), reconstructed_data_side, evec3, eval3, 1,1)
+plot2DPCA(D, mean(D), reconstructed_data_side, evec3, eval3, 0,1)
 title('Exercise 3, Reconstructed data3 using side vector');
 %What is the averrage error made?
 errormatrix_side = D - reconstructed_data_side;
