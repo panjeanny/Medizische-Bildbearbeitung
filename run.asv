@@ -216,7 +216,9 @@ axis equal
 %%%%%%%%%%%%%%%%%%%%%%%%
 %% Exercise 2 %%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%
+clear all;
 
+load 'handdata';
 
 
 
