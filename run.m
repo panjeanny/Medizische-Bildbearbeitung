@@ -1,5 +1,7 @@
 clear all;
 close all;
+ex1=false;
+if (ex1 == true)
 load daten
 
 %% 1.Berechnen Kovarianzmarix und ploten
@@ -162,7 +164,7 @@ for i=1:14
     for l = linspace(-3*sqrt(d(i)),3*sqrt(d(i)),10);
         b = zeros(14,1);
         b(i) = l;
-        plotShape(meanshape,v,b);
+        plotShape(meanshape,v,b, [],[],[],[]);
         title(['Mode N: ' num2str(i)]);
         axis equal
         hold on
@@ -180,7 +182,7 @@ figure
 vec=v(:,1:13);
 b=randn(1,13).*sqrt(d(1:13)');
 subplot(2,2,1)
-plotShape(meanshape,vec,b');
+plotShape(meanshape,vec,b', [],[],[],[]);
 title('100% Variance');
 axis equal
 hold on
@@ -190,7 +192,7 @@ hold on
 vec=v(:,1:5);
 b=randn(1,5).*sqrt(d(1:5)');% For 95% Variance %
 subplot(2,2,2)
-plotShape(meanshape,vec,b');
+plotShape(meanshape,vec,b', [],[],[],[]);
 title('95% Variance');
 axis equal
 hold on
@@ -199,7 +201,7 @@ hold on
 vec=v(:,1:3);
 b=randn(1,3).*sqrt(d(1:3)');     % For 90% Variance %
 subplot(2,2,3)
-plotShape(meanshape,vec,b');
+plotShape(meanshape,vec,b', [],[],[],[]);
 title('90% Variance');
 hold on
 axis equal
@@ -208,20 +210,72 @@ axis equal
 vec=v(:,1:3);
 b=randn(1,3).*sqrt(d(1:3)');     % For 80% Variance %
 subplot(2,2,4)
-plotShape(meanshape,vec,b');
+plotShape(meanshape,vec,b', [],[],[],[]);
 title('80% Variance');
 hold on
 axis equal
-
+end
 %%%%%%%%%%%%%%%%%%%%%%%%
 %% Exercise 2 %%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%
+clear all;
+close all;
 
+load 'handdata';
 
+shape = reshape(aligned,[size(aligned,1)*size(aligned,2),size(aligned,3)]);
+[V,D] = ourPCA(shape'); % eigenvector from high dimensional spce
+meanshape = mean(shape,2);
 
+v = V(:,1:50);
+d = D(1:50);
+%for 
+%figure;
+%b = zeros(50,1);
+%b(1) = 1;
+%plotShape(meanshape,v,b);
 
+% figure
+% for i=1:10
+%     subplot(2,5,i)
+%     for l = linspace(-3*sqrt(d(i)),3*sqrt(d(i)),10);
+%         b = zeros(50,1);
+%         b(i) = l;
+%         plotShape(meanshape,v,b, [],[],[],[]);
+%         title(['Mode N: ' num2str(i)]);
+%         axis equal
+%         hold on
+%     end
+% end
 
+b=ones(50,1);
+figure
+% subplot(2,2,1)
+% plotShape(meanshape,v,b, [],[],[],[]);
+% title('Reference');
+% axis equal;
 
+scaling = [[2,0];[0,2]];
+subplot(2,2,1)
+plotShape(meanshape,v,b, scaling,[],[],[]);
+title('Scaled larger');
+axis equal;
+%plotShape(meanshape,v,b, scaling, rotation, xtranslation, ytranslation);
 
+rotation = [[0,-1];[1,0]];
+subplot(2,2,2)
+plotShape(meanshape,v,b, [],rotation,[],[]);
+title('Rotated, 90°');
+axis equal;
 
+subplot(2,2,3)
+xtranslation = 100;
+plotShape(meanshape,v,b, [],[],xtranslation,[]);
+title('XTranslated');
+axis equal;
 
+subplot(2,2,4)
+ytranslation = 100;
+plotShape(meanshape,v,b, [],[],[],ytranslation);
+title('YTranslated');
+axis equal;
