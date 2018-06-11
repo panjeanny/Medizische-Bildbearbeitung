@@ -218,6 +218,7 @@ end
 %%%%%%%%%%%%%%%%%%%%%%%%
 %% Exercise 2 %%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%
+%% Part 1, Shape Modell
 clear all;
 close all;
 
@@ -279,3 +280,35 @@ ytranslation = 100;
 plotShape(meanshape,v,b, [],[],[],ytranslation);
 title('YTranslated');
 axis equal;
+
+%% Part 2: Feature Extraction %%
+% Structure of feature Matrix:
+% [Gray Gx Gy Mag haarlike'(20 cols) haarlike_mag'(20 clos) Xcor Ycor];
+% Gx, Gy ... Gradients in x and y
+% Mag ... Magnitude of Gradient
+
+image = images{1,1};
+[m, n] = size(image);
+features = computeFeatures(image);
+%imagesc(features(:,45), features(:,46), features(:,1));
+figure;
+subplot(2,3,1)
+imagesc(reshape(features(:,1),m ,n));  
+title('Grayvalues');
+subplot(2,3,2)
+imagesc(reshape(features(:,2),m ,n));  
+title('Gradient in X-Direction');
+subplot(2,3,3)
+imagesc(reshape(features(:,3),m ,n));  
+title('Gradient in Y-Direction');
+subplot(2,3,4)
+imagesc(reshape(features(:,4),m ,n));  
+title('Gradient Magnitude');
+subplot(2,3,5)
+imagesc(reshape(features(:,5),m ,n));  
+title('Haarlike (1. column)'); %% Here it is just turquoise
+subplot(2,3,6)
+imagesc(reshape(features(:,25),m ,n));  
+title('Haarlike Magnitude (1. column)');
+
+%% 
