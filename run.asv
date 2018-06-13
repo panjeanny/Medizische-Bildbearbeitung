@@ -332,3 +332,6 @@ plot(rf.OOBPermutedVarDeltaError)
 % Feature 3  => gradient y direction
 % Feature 9,13,18  => Part of Haarlike Features
 % Feature 25, 26,27, 31, 35, 39 => Part of Haarlike Magnitude
+% Feature 31 
+% Feature 35
+% Feature 39
