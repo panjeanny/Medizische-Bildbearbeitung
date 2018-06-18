@@ -294,24 +294,30 @@ image = images{1,1};
 features = computeFeatures(image);
 %imagesc(features(:,45), features(:,46), features(:,1));
 figure;
-subplot(2,3,1)
+subplot(2,4,1)
 imagesc(reshape(features(:,1),m ,n));  
 title('Grayvalues');
-subplot(2,3,2)
+subplot(2,4,2)
 imagesc(reshape(features(:,2),m ,n));  
 title('Gradient in X-Direction');
-subplot(2,3,3)
+subplot(2,4,3)
 imagesc(reshape(features(:,3),m ,n));  
 title('Gradient in Y-Direction');
-subplot(2,3,4)
+subplot(2,4,4)
 imagesc(reshape(features(:,4),m ,n));  
 title('Gradient Magnitude');
-subplot(2,3,5)
+subplot(2,4,5)
 imagesc(reshape(features(:,5),m ,n));  
 title('Haarlike (1. column)'); %% Here it is just turquoise
-subplot(2,3,6)
+subplot(2,4,6)
 imagesc(reshape(features(:,25),m ,n));  
 title('Haarlike Magnitude (1. column)');
+subplot(2,4,7)
+imagesc(reshape(features(:,45),m ,n));  
+title('X Coordinate');
+subplot(2,4,8)
+imagesc(reshape(features(:,46),m ,n));  
+title('Y Coordinate');
 
 %% Part 3: Classification & Feature SElection Goal is to classify edges of objects to be segmented.
 % The Random Forest classifier implemented in TreeBagger has to be used
@@ -332,3 +338,30 @@ plot(rf.OOBPermutedVarDeltaError)
 % Feature 3  => gradient y direction
 % Feature 9,13,18  => Part of Haarlike Features
 % Feature 25, 26,27, 31, 35, 39 => Part of Haarlike Magnitude
+
+%% Exercise 2 - Part 4 Shape Particle Filters
+
+[rf, V, D] = train(images(1:30),masks(1:30), shape(:,1:30));
+
+YFit=predictSegmentation(rf, images{31});
+[m n] = size(images{31});
+%%
+yfit_reshape = zeros(size(YFit,1),size(YFit,2));
+yfit_reshape = str2double(reshape(YFit,m ,n));
+
+% [x y]= meshgrid(1:size(image,2), 1:size(image,1));
+% feat = [yfit_reshape(
+figure;
+icors=[];
+jcors=[];
+for i=1:size(yfit_reshape,1)
+    for j=1:size(yfit_reshape,2)
+        if yfit_reshape(i,j) == 1
+            icors=[icors, i];
+            jcors=[jcors, j];
+        end
+    end
+end
+scatter(jcors,icors); %? Output should be bone shaped. Does not make sense here
+
+plotShape(meanshape,V,b, [],[],[],[]); %how is b determined??

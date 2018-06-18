@@ -26,19 +26,7 @@ haarlike_mag = computeHaarLike(mag);
 Xcor = xcor(:);
 Ycor = ycor(:);
 
-featureMatrix=[Gray Gx Gy Mag haarlike' haarlike_mag' Xcor Ycor];
+featureMatrix=[double(Gray) double(Gx) double(Gy) double(Mag) haarlike' haarlike_mag' double(Xcor) double(Ycor)];
 
-% for i=1:size(image,1)
-%     for j=1:size(image,2)
-%         featureMatrix(i,j).x=j; %Actual pixel position
-%         featureMatrix(i,j).y=i; 
-%         featureMatrix(i,j).gx=gx(j); %Gradienten in x und y
-%         featureMatrix(i,j).gy=gy(i);
-%         
-%         
-%         
-%         
-%     end
-% end
 end
 
