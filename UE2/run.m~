@@ -128,10 +128,12 @@ plot(rf.OOBPermutedVarDeltaError)
 % Feature 25, 26,27, 31, 35, 39 => Part of Haarlike Magnitude
 
 %% Exercise 2 - Part 4 Shape Particle Filters
-%% a
+
 [rf, V, D] = train(images(1:30),masks(1:30), shape(:,1:30));
 
-[YFit, scores]=predictSegmentation(rf, images{31});
+%YFit=predictSegmentation(rf, images{31});
+% not need for the addictional predictSegmentation.m
+[YFit, scores]=rf.predict(computeFeatures(images{31})); 
 
 [m n] = size(images{31});
 %%

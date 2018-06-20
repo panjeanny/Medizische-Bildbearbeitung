@@ -4,7 +4,7 @@ function [Yfit, scores] = predictSegmentation(rf,testimage)
 
 featurematrix = computeFeatures(testimage);
 
-[Yfit, scores]=predict(rf,featurematrix);
-
+[Yfit, scores]=rf.predict(featurematrix);
+%rf.predict
 end
 
