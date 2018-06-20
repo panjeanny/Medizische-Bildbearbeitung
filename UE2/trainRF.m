@@ -29,7 +29,7 @@ for i=1:size(images,2)
     training_label = [training_label ones(1,px) zeros(1,px)];
 end
 
-rf=TreeBagger(32,single(training_features)',training_label','OOBVarImp','on')
+rf=TreeBagger(32,(training_features)',training_label','OOBVarImp','on')
 
 end
 

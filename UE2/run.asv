@@ -154,12 +154,3 @@ end
 scatter(jcors,icors); %? Output should be bone shaped. Does not make sense here
 
 %plotShape(meanshape,V,b, [],[],[],[]); %how is b determined??
-
-%% 4b - implementing the const function
-
-costFunction = makeCostFunction(meanshape, V);
-
-%% 4c - differential evolution
-
-
-%% 4d - performance evaluation
