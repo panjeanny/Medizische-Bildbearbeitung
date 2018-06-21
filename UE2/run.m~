@@ -72,7 +72,7 @@ axis equal;
 
 addpath('providedFunctions');
 
-image = images{1,1};
+image = images{1};
 [m, n] = size(image);
 features = computeFeatures(image);
 %imagesc(features(:,45), features(:,46), features(:,1));
@@ -119,7 +119,7 @@ plot(rf.oobError);
 
 %% c
 figure;
-plot(rf.OOBPermutedVarDeltaError)
+bar(rf.OOBPermutedVarDeltaError)
 % Major Peaks at:
 % Feature 45, => x coordinate
 % Feature 1  => Gray Value
@@ -128,17 +128,16 @@ plot(rf.OOBPermutedVarDeltaError)
 % Feature 25, 26,27, 31, 35, 39 => Part of Haarlike Magnitude
 
 %% Exercise 2 - Part 4 Shape Particle Filters
-
+%% a
 [rf, V, D] = train(images(1:30),masks(1:30), shape(:,1:30));
+rf = trainRF1(images(1:30),masks(1:30));
+YFit=predictSegmentation(rf, images{31});
 
-%YFit=predictSegmentation(rf, images{31});
-% not need for the addictional predictSegmentation.m
-[YFit, scores]=rf.predict(computeFeatures(images{31})); 
+GT=reshape(masks{31},m*n,1);
 
 [m n] = size(images{31});
 %%
-yfit_reshape = zeros(size(YFit,1),size(YFit,2));
-yfit_reshape = str2double(reshape(YFit,m ,n));
+yfit_reshape = reshape(YFit,m ,n);
 
 % [x y]= meshgrid(1:size(image,2), 1:size(image,1));
 % feat = [yfit_reshape(

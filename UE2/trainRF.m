@@ -6,7 +6,7 @@ training_label =[];
 
 for i=1:size(images,2)
     
-    features = computeFeatures(images{1,i});
+    features = computeFeatures(images{i});
     
     %Extracting border from mask (in column form)
     foreground = masks{1,i}(:)>0;
@@ -18,18 +18,24 @@ for i=1:size(images,2)
     
     %creating features and corresponding labels
     
-    [px, feats] = size(border_features{i});
+    px = size(border_features{i},1);
     
-    shuffle=randsample(1:px,px);
+    shuffle=randsample(1:size(background_features{i},1),px);
     selected_background{i}=background_features{i}(shuffle,:);
     
-    %in labels: 1 .. foreground, 0 ... background
-    
-    training_features=[training_features border_features{i}' selected_background{i}'];
-    training_label = [training_label ones(1,px) zeros(1,px)];
+%     %in labels: 1 .. foreground, 0 ... background
+%     
+%     training_features{i}=[training_features border_features{i}' selected_background{i}'];
+%     training_label{i} = [training_label ones(1,px) zeros(1,px)];
 end
 
-rf=TreeBagger(32,single(training_features)',training_label','OOBVarImp','on')
+border_features = cell2mat(border_features(:));                 %umwandeln array -> matrix 
+selected_background = cell2mat(selected_background(:));       
+
+label=cat(1,ones(size(border_features,1),1),zeros(size(selected_background,1),1));     %Labeling der Vorder/Hintergrundfeatures mit 1/0 zur Unterscheidung im TreeBagger%
+features=cat(1,border_features,selected_background);    
+
+rf=TreeBagger(32,single(features),label,'OOBVarImp','on')
 
 end
 
