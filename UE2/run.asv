@@ -72,7 +72,7 @@ axis equal;
 
 addpath('providedFunctions');
 
-image = images{1};
+image = images{1,1};
 [m, n] = size(image);
 features = computeFeatures(image);
 %imagesc(features(:,45), features(:,46), features(:,1));
@@ -119,7 +119,7 @@ plot(rf.oobError);
 
 %% c
 figure;
-bar(rf.OOBPermutedVarDeltaError)
+plot(rf.OOBPermutedVarDeltaError)
 % Major Peaks at:
 % Feature 45, => x coordinate
 % Feature 1  => Gray Value
@@ -130,14 +130,13 @@ bar(rf.OOBPermutedVarDeltaError)
 %% Exercise 2 - Part 4 Shape Particle Filters
 %% a
 [rf, V, D] = train(images(1:30),masks(1:30), shape(:,1:30));
-rf = trainRF1(images(1:30),masks(1:30));
-YFit=predictSegmentation(rf, images{31});
 
-GT=reshape(masks{31},m*n,1);
+[YFit, scores]=predictSegmentation(rf, images{31});
 
 [m n] = size(images{31});
 %%
-yfit_reshape = reshape(YFit,m ,n);
+yfit_reshape = zeros(size(YFit,1),size(YFit,2));
+yfit_reshape = str2double(reshape(YFit,m ,n));
 
 % [x y]= meshgrid(1:size(image,2), 1:size(image,1));
 % feat = [yfit_reshape(
@@ -155,12 +154,3 @@ end
 scatter(jcors,icors); %? Output should be bone shaped. Does not make sense here
 
 %plotShape(meanshape,V,b, [],[],[],[]); %how is b determined??
-
-%% 4b - implementing the const function
-
-costFunction = makeCostFunction(meanshape, V);
-
-%% 4c - differential evolution
-
-
-%% 4d - performance evaluation
