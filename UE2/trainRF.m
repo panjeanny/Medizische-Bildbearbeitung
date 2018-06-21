@@ -29,7 +29,6 @@ for i=1:size(images,2)
 %     training_label{i} = [training_label ones(1,px) zeros(1,px)];
 end
 
-<<<<<<< HEAD
 border_features = cell2mat(border_features(:));                 %umwandeln array -> matrix 
 selected_background = cell2mat(selected_background(:));       
 
@@ -37,9 +36,8 @@ label=cat(1,ones(size(border_features,1),1),zeros(size(selected_background,1),1)
 features=cat(1,border_features,selected_background);    
 
 rf=TreeBagger(32,single(features),label,'OOBVarImp','on')
-=======
-rf=TreeBagger(32,(training_features)',training_label','OOBVarImp','on')
->>>>>>> 99134406188163b8258fb94ece60e0b22b0b5331
+
+
 
 end
 
