@@ -133,9 +133,10 @@ bar(rf.OOBPermutedVarDeltaError)
 rf = trainRF(images(1:30),masks(1:30));
 YFit=predictSegmentation(rf, images{31});
 
-GT=reshape(masks{31},m*n,1);
+
 
 [m n] = size(images{31});
+GT=reshape(masks{31},m*n,1);
 %%
 yfit_reshape = reshape(YFit,m ,n);
 
@@ -152,7 +153,7 @@ for i=1:size(yfit_reshape,1)
         end
     end
 end
-scatter(jcors,icors); %? Output should be bone shaped. Does not make sense here
+scatter(jcors,icors,1); %? Output should be bone shaped. Does not make sense here
 
 %plotShape(meanshape,V,b, [],[],[],[]); %how is b determined??
 
