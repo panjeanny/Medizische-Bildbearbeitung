@@ -130,7 +130,7 @@ bar(rf.OOBPermutedVarDeltaError)
 %% Exercise 2 - Part 4 Shape Particle Filters
 %% a
 [rf, V, D] = train(images(1:30),masks(1:30), shape(:,1:30));
-rf = trainRF1(images(1:30),masks(1:30));
+rf = trainRF(images(1:30),masks(1:30));
 YFit=predictSegmentation(rf, images{31});
 
 GT=reshape(masks{31},m*n,1);
