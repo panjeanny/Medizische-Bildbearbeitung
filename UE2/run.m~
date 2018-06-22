@@ -130,28 +130,35 @@ bar(rf.OOBPermutedVarDeltaError)
 %% Exercise 2 - Part 4 Shape Particle Filters
 %% a
 [rf, V, D] = train(images(1:30),masks(1:30), shape(:,1:30));
-rf = trainRF1(images(1:30),masks(1:30));
-YFit=predictSegmentation(rf, images{31});
-
-GT=reshape(masks{31},m*n,1);
-
+[YFit,score] = predictSegmentation(rf, images{31});
 [m n] = size(images{31});
-%%
 yfit_reshape = reshape(YFit,m ,n);
 
-% [x y]= meshgrid(1:size(image,2), 1:size(image,1));
-% feat = [yfit_reshape(
-figure;
-icors=[];
-jcors=[];
-for i=1:size(yfit_reshape,1)
-    for j=1:size(yfit_reshape,2)
-        if yfit_reshape(i,j) == 1
-            icors=[icors, i];
-            jcors=[jcors, j];
-        end
-    end
-end
-scatter(jcors,icors); %? Output should be bone shaped. Does not make sense here
+%GT=reshape(masks{31},m*n,1);
 
-plotShape(meanshape,V,b, [],[],[],[]); %how is b determined??
+figure
+imagesc(yfit_reshape);
+
+%% 4b - implementing the const function & 4c - differential evolution
+
+options = optimoptions('fminunc','MaxFunctionEvaluations', 400);
+
+for i = 31:50
+    [YFit,score] = predictSegmentation(rf, images{i});
+    
+    % Initalize fitting parameters p
+    [m n] = size(score);
+    p_init = zeros(n,1);
+    minimums = [1; 1];
+    maximums = [ 300;  200];
+    
+    cost=makeCostFunction(p_init,score,YFit);
+    
+    cost = costFunction(p_init,score,YFit);
+    optimize(cost,minimums,maximums,@drawPopulation);
+
+    p_optimized(i) = fminunc(@(t)(costFunction(t,score,YFit)),p_init,options);    
+end
+
+
+%% 4d - performance evaluation

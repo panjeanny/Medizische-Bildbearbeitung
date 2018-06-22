@@ -35,9 +35,8 @@ selected_background = cell2mat(selected_background(:));
 label=cat(1,ones(size(border_features,1),1),zeros(size(selected_background,1),1));     %Labeling der Vorder/Hintergrundfeatures mit 1/0 zur Unterscheidung im TreeBagger%
 features=cat(1,border_features,selected_background);    
 
-rf=TreeBagger(32,single(features),label,'OOBVarImp','on')
-
-
+rf=TreeBagger(32,features,label,'oobpred','on',...
+            'Method','classification','oobvarimp','on');
 
 end
 
