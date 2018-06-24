@@ -9,7 +9,7 @@ costFunction = makeCostFunction(surface);
 figure;
 imagesc(surface);
 
-optimize(costFunction,minimums,maximums,@drawPopulation);
+a=optimize(costFunction,minimums,maximums,@drawPopulation);
 end
 
 function [r, mi, ma] = makeOptimizationLandscape1

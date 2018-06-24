@@ -119,33 +119,62 @@ imagesc(yfit_reshape);
 
 %% 4b - implementing the const function & 4c - differential evolution
 
+options = optimoptions('fminunc','MaxFunctionEvaluations', 400);
 
 for i = 31:50
     [YFit,score] = predictSegmentation(rf, images{i});
     
     % Initalize fitting parameters p
-    [m n] = size(images{i});
-    p_init = sqrt(D);
-    p_init=[p_init;0;2;0;0];
-    scores=reshape(score(:,1),m,n); 
-    
-    
-    
+    [m n] = size(score);
+    p_init = zeros(1,17);
     minimums = [1; 1];
     maximums = [ 300;  200];
     
     cost = costFunction(p_init,score,YFit);
-    
+    score=reshape(score(:,1),size(images{i})); 
     
     yfit_reshape = reshape(YFit,m ,n);
-    [m n] = size(images{i});
-    GT=reshape(masks{i},m*n,1);
+    GT=reshape(masks{i},size(images{i},1);
 
-    costen=makeCostFunction(scores,V,meanshape);   
+
+    costen=makeCostFunctionTest(score,V,D,meanshape,GT);
+        
+        
+
+    
     a=fmincon(costen,p_init);
-    shape=generateShapeNew(meanshape,V,a);
 
+    
+    
+    
+    cost1=@(t)(costFunction(t,score,YFit));
+   a= fmincon(@(t)(costFunctionTest(t,V,meanshape,YFit,)),p_init);
+   a= fmincon(@(t)(costFunctionTest(t,V,meanshape,YFit)),p_init);
+
+    %min/max-Werte der einzelnen
+    %Parameter des Parametervektors p, die fuer die Optimierungsfunktion zur Shapeanpassung an das Bild dienen%
+    minEVals= -3*sqrt(D);       
+    minRotation=-((2*pi)/360)*20;   
+    minScaling= 0.9;
+    minTranslationx= size(score,1)*0.4;
+    minTranslationy=size(score,2)*0.4;
+    maxEVals= +3*sqrt(D);
+    maxRotation= ((2*pi)/360)*20;   
+    maxScaling= 1.2;
+    maxTranslationx= size(score,1)*0.6;
+    maxTranslationy=size(score,2)*0.6;
+%     minimums=[minEVals',minRotation,minScaling,minTranslationx,minTranslationy]; %MinVektor der Optimierungsfunktion%
+%     maximums=[maxEVals',maxRotation,maxScaling,maxTranslationx,maxTranslationy]; %MaxVektor der Optimierungsfunktion%
+    optimize(cost1,[1; 1],[ 300;  200],@drawPopulation); 
+
+    p_optimized(i) = fminunc(@(t)(costFunction(t,score,YFit)),p_init,options);    
 end
+
+% function h = drawPopulation(population, bestInd)
+%     h(1) = plot(population(1,:),population(2,:),'wx'); hold on
+%     h(2) = plot(population(1,:),population(2,:),'b+'); hold on
+%     h(3) = plot(population(1,bestInd),population(2,bestInd),'g+');
+% end
 
 
 %% 4d - performance evaluation

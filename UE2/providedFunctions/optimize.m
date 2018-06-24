@@ -62,8 +62,8 @@ while i<maxIter && nStableIter<1e4
             catch %#ok<CTCH>
             end
         end
-        figHandles = feval(drawFunction,pop,sortInd(1));
-        drawnow
+%         figHandles = feval(drawFunction,pop,sortInd(1));
+%         drawnow
     end
     
     % replace worst members
@@ -83,6 +83,12 @@ for i = 1:numel(mi)
     r(i,:) = min(max(r(i,:), mi(i)), ma(i));
 end
 
+end
+
+function h = drawPopulation(population, bestInd)
+    h(1) = plot(population(1,:),population(2,:),'wx'); hold on
+    h(2) = plot(population(1,:),population(2,:),'b+'); hold on
+    h(3) = plot(population(1,bestInd),population(2,bestInd),'g+');
 end
 
 
