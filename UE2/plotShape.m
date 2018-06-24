@@ -1,10 +1,8 @@
-function plotShape(meanshape,V,b, scaling, rotation, xtranslation, ytranslation)
-    shape = generateShape(meanshape,V,b, scaling, rotation, xtranslation, ytranslation);
-    newshape = reshape(shape,size(shape,1)/2,2);
-    plot(newshape(:,1),newshape(:,2),'b');
+function plotShape(meanshape,V,p)
+    shape = generateShapeNew(meanshape,V,p);
+    plot(shape(1:64),shape(65:128),'b');
     axis equal;
     hold on
-    meanshape = reshape(meanshape,size(shape,1)/2,2);
-    plot(meanshape(:,1),meanshape(:,2),'r');
+    plot(meanshape(1:64),meanshape(65:128),'r');
     axis equal;
 end

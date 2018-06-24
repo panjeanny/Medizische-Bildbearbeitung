@@ -10,6 +10,8 @@ load 'handdata';
 shape = reshape(aligned,[size(aligned,1)*size(aligned,2),size(aligned,3)]);
 [V,D] = ourPCA(shape'); % eigenvector from high dimensional spce
 meanshape = mean(shape,2);
+rotated = [ones(1,64),-ones(1,64)];
+meanshape = rotated'.* meanshape;
 
 v = V(:,1:50);
 d = D(1:50);
@@ -17,28 +19,32 @@ d = D(1:50);
 b=ones(50,1);
 figure
 
-scaling = [[2,0];[0,2]];
+scaling = [ 0, 2, 0, 0 ]';
+p = [b;scaling];
 subplot(2,2,1)
-plotShape(meanshape,v,b, scaling,[],[],[]);
+plotShape(meanshape,v,p);
 title('Scaled larger');
 axis equal;
-%plotShape(meanshape,v,b, scaling, rotation, xtranslation, ytranslation);
 
-rotation = [[0,-1];[1,0]];
+rotation = [ 90, 1, 0, 0 ]';
+p = [b;rotation];
 subplot(2,2,2)
-plotShape(meanshape,v,b, [],rotation,[],[]);
+plotShape(meanshape,v,p);
 title('Rotated, 90 degree');
 axis equal;
 
+xtranslation = [ 0, 2, 10, 0 ]';
+p = [b;xtranslation];
 subplot(2,2,3)
-xtranslation = 100;
-plotShape(meanshape,v,b, [],[],xtranslation,[]);
+plotShape(meanshape,v,p);
 title('XTranslated');
 axis equal;
 
+
+ytranslation = [ 0, 2, 0, 10 ]';
+p = [b;ytranslation];
 subplot(2,2,4)
-ytranslation = 100;
-plotShape(meanshape,v,b, [],[],[],ytranslation);
+plotShape(meanshape,v,p);
 title('YTranslated');
 axis equal;
 
