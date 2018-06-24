@@ -120,7 +120,7 @@ imagesc(yfit_reshape);
 %% 4b - implementing the const function & 4c - differential evolution
 
 
-for i = 31:50
+for i = 31:31%50
     [YFit,score] = predictSegmentation(rf, images{i});
     
     % Initalize fitting parameters p
@@ -132,7 +132,9 @@ for i = 31:50
     costen=makeCostFunction(scores,V,meanshape);   
     a=fmincon(costen,p_init);
     shape=generateShapeNew(meanshape,V,a);
-
+    shape_reshape = reshape(shape,64,2);
+    
+    
 end
 
 
