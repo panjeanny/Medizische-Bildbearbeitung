@@ -10,8 +10,6 @@ load 'handdata';
 shape = reshape(aligned,[size(aligned,1)*size(aligned,2),size(aligned,3)]);
 [V,D] = ourPCA(shape'); % eigenvector from high dimensional spce
 meanshape = mean(shape,2);
-rotated = [ones(1,64),-ones(1,64)];
-meanshape = rotated'.* meanshape;
 
 v = V(:,1:50);
 d = D(1:50);
@@ -151,7 +149,7 @@ for i = 31:33%50
     last_shape = shape_reshape;
     
     figure
-    plot(shape_reshape(:,1),shape_reshape(:,2));
+    plot(shape_reshape(:,1),-shape_reshape(:,2));
     title(['Image ',num2str(i)])
     
 end
