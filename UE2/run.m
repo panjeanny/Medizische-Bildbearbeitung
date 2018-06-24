@@ -119,7 +119,6 @@ imagesc(yfit_reshape);
 
 %% 4b - implementing the const function & 4c - differential evolution
 
-
 for i = 31:31%50
     [YFit,score] = predictSegmentation(rf, images{i});
     
