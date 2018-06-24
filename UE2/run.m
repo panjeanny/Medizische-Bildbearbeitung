@@ -134,6 +134,9 @@ for i = 31:31%50
     shape=generateShapeNew(meanshape,V,a);
     shape_reshape = reshape(shape,64,2);
     
+    figure
+    plot(shape_reshape(:,1),shape_reshape(:,2));
+    title(['Image ',num2str(i)])
     
 end
 
