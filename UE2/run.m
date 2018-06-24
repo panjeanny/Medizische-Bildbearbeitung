@@ -128,18 +128,6 @@ for i = 31:50
     p_init = sqrt(D);
     p_init=[p_init;0;2;0;0];
     scores=reshape(score(:,1),m,n); 
-    
-    
-    
-    minimums = [1; 1];
-    maximums = [ 300;  200];
-    
-    cost = costFunction(p_init,score,YFit);
-    
-    
-    yfit_reshape = reshape(YFit,m ,n);
-    [m n] = size(images{i});
-    GT=reshape(masks{i},m*n,1);
 
     costen=makeCostFunction(scores,V,meanshape);   
     a=fmincon(costen,p_init);
