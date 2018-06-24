@@ -23,7 +23,7 @@ for i = 1:size(pop,2)
 end
 nStableIter = 0;
 i = 0;
-maxIter = 1e6;
+maxIter = 1e4;%1e6;
 
 lastCosts = realmax*ones(1,10000);
 while i<maxIter && nStableIter<1e4
