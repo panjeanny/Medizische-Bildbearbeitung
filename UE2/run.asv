@@ -119,27 +119,26 @@ imagesc(yfit_reshape);
 
 %% 4b - implementing the const function & 4c - differential evolution
 
+
 for i = 31:33%50
     [YFit,score] = predictSegmentation(rf, images{i});
     
     % Initalize fitting parameters p
     [m n] = size(images{i});
-    p_init = -3*sqrt(D);
-    p_init = [p_init;-((2*pi)/360)*20;0.9;size(score,1)*0.4;size(score,1)*0.4];
-    p_max = 3*sqrt(D);
-    p_max = [p_max;(2*pi)/360*20;1.2;size(score,1)*0.6;size(score,1)*0.6];
+    p_init = sqrt(D);
+    p_init=[p_init;0;2;0;0];
     scores=reshape(score(:,1),m,n); 
 
-    costen=makeCostFunction(scores,V,meanshape);
-    m=optimize(costen,p_init,p_max);
-    shape=generateShapeNew(meanshape,V,m);
+    costen=makeCostFunction(scores,V,meanshape);   
+    a=fmincon(costen,p_init);
+    shape=generateShapeNew(meanshape,V,a);
     shape_reshape = reshape(shape,64,2);
     
     if i>31
        diff = last_shape-shape_reshape;
        figure
         plot(diff(:,1),diff(:,2));
-        title(['Image Differences ',num2str(i-1), ' and ', num2str(i)])
+        title(['Image Differences ',num2str(i), ])
     end
     
     last_shape = shape_reshape;
