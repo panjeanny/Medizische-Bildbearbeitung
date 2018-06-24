@@ -14,7 +14,7 @@ function f = makeCostFunction(probs, EVecs, meanshape)
         parameter_shape=zeros(size(probs,1),size(probs,2));
       
         for i=1:64%size(shape,1)
-            parameter_shape(shape(i,2),shape(i,1))=1;
+            parameter_shape(shape(i,2),shape(i,1))=1; % Umwandlung von Koordinatensystem auf MAtrix
         end
             
         [m n]=size(probs);

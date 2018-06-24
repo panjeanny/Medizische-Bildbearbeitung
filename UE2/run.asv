@@ -138,7 +138,7 @@ for i = 31:33%50
        diff = last_shape-shape_reshape;
        figure
         plot(diff(:,1),diff(:,2));
-        title(['Image Differences ',num2str(i-1), ' and ', num2str(i)])
+        title(['Image Differences ',num2str(i), ])
     end
     
     last_shape = shape_reshape;
