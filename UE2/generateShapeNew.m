@@ -1,5 +1,5 @@
 function [shape] = generateShapeNew( meanshape, EVecs, p )
-
+%structure of p: b, rotation, scaling, transx, transy
     b = p(1:end-4); %die Werte vor den translation x, trans y, rotation, skalierung
 
     rotation=p(end-3); 
@@ -20,8 +20,8 @@ function [shape] = generateShapeNew( meanshape, EVecs, p )
     
     %Rotationsmatrix mit Skalierung erstellen...Rotation gegen
     %Uhrzeigersinn um Winkel: rotation
-    rotskalmatrix = [(  cos(rotation)*skalierung ), (-sin(rotation)*skalierung) ;
-                     (  sin(rotation)*skalierung ), ( cos(rotation)*skalierung) ];
+    rotskalmatrix = [(  cos(rotation/180*pi)*skalierung ), (-sin(rotation/180*pi)*skalierung) ;
+                     (  sin(rotation/180*pi)*skalierung ), ( cos(rotation/180*pi)*skalierung) ];
     
                     
     %shape = reshape( 

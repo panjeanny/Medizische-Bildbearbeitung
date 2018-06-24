@@ -33,7 +33,7 @@ plotShape(meanshape,v,p);
 title('Rotated, 90 degree');
 axis equal;
 
-xtranslation = [ 0, 1, 40, 0 ]';
+xtranslation = [ 0, 1, 10, 0 ]';
 p = [b;xtranslation];
 subplot(2,2,3)
 plotShape(meanshape,v,p);
@@ -41,7 +41,7 @@ title('XTranslated');
 axis equal;
 
 
-ytranslation = [ 0, 1, 0, 40 ]';
+ytranslation = [ 0, 1, 0, 4 ]';
 p = [b;ytranslation];
 subplot(2,2,4)
 plotShape(meanshape,v,p);
